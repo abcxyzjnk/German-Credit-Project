@@ -1,59 +1,41 @@
-# German Credit Risk Predictive Modeling
+# German Credit Risk Predictive Modeling 🏦📊
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
-[![Scikit-Learn](https://img.shields.io/badge/Machine_Learning-Scikit--Learn-orange.svg)](https://scikit-learn.org/)
-[![Framework](https://img.shields.io/badge/Methodology-CRISP--DM-green.svg)](https://en.wikipedia.org/wiki/Cross-industry_standard_process_for_data_mining)
+An end-to-end Machine Learning project to automate credit scoring and optimize the trade-off between default risk and lending revenue.
+
+---
 
 ## 1. Project Overview & Business Context
-In the banking industry, credit underwriting is the core revenue driver but inherently introduces substantial credit default risk. This project leverages advanced machine learning workflows on the **German Credit Dataset** (1,000 historical customer loan applications) to automate credit scoring and classify applicants into **Good Risk (1)** or **Bad Risk (0)**. 
+Credit provisioning is the primary revenue engine for financial institutions but inherently exposes them to substantial default risk. This project applies advanced predictive modeling workflows on the **German Credit Dataset** (1,000 applicant records) to classify individuals into **Good Risk (1)** or **Bad Risk (0)**. 
 
-The primary business objective is to balance the trade-off between maximizing lending interest margins (lowering opportunity costs) and protecting the bank's core capital from non-performing loans (NPLs).
-
----
-
-## 2. Key Insights from Exploratory Data Analysis (EDA)
-* **Feature Schema Discovered:** Out of 21 raw features, metadata exploration verified that only **3 features are genuinely continuous** (`duration`, `credit_amount`, `age`), while the remaining 18 are encoded categorical attributes.
-* **Primary Risk Indicators:** Correlation matrices (Pearson, Spearman, Kendall) highlight that `checking_account`, `credit_history`, and `savings_account` hold the strongest positive correlation with creditworthiness. Conversely, loan `duration` acts as the strongest negative predictor (prolonged duration increases default risk).
-* **Class Imbalance:** The target class exhibits an implicit **70% "Good" vs. 30% "Bad"** base rate imbalance, requiring strategic sampling and cost-sensitive adjustments.
+The primary task is to develop a data-driven system that mitigates capital losses from Non-Performing Loans (NPLs) while sustaining portfolio growth.
 
 ---
 
-## 3. Methodology & Core Framework
-The workflow follows a rigorous pipeline:
-1. **Data Preprocessing:** Standard Scaling for continuous distributions, One-Hot Encoding for nominal categorical vectors, and handling original German code mappings.
-2. **Imbalance Mitigation:** Applied SMOTE (Synthetic Minority Over-sampling Technique) to ensure the models learn high-risk behavior patterns adequately.
-3. **Algorithms Evaluated:** Trained and fine-tuned three distinct modeling archetypes:
-   * **Logistic Regression** (Linear Discriminative Baseline)
-   * **Random Forest** (Non-parametric Tree Ensemble)
-   * **Naive Bayes** (Generative Probabilistic Classifier)
+## 2. Comprehensive Project Report (PDF)
+> 💡 **For full methodology, theoretical framework, mathematical formulation, and in-depth business conclusions, please refer to my complete academic report:**
 
 ---
 
-## 4. Recalibrated Model Performance & Trade-Offs
+## 3. Key Findings & Recalibrated Performance
+Our Exploratory Data Analysis (EDA) successfully mapped the feature schema, identifying **3 actual continuous numerical attributes** (`duration`, `credit_amount`, `age`) and 18 masked categorical features. 
 
-Evaluated on a 300-sample test set ($210$ Good, $90$ Bad), the fine-tuned models revealed a stark strategic trade-off:
+After hyperparameter tuning and mitigating class imbalance (70% Good vs. 30% Bad) via SMOTE, the models evaluated on a 300-sample test set ($210$ Good, $90$ Bad) demonstrated a critical strategic trade-off:
 
-| Metric | Model 1: Logistic Regression | Model 2: Random Forest | Model 3: Naive Bayes |
-| :--- | :---: | :---: | :---: |
-| **Accuracy** | **62.0%** | 52.7% | 60.0% |
-| **Recall (Bad Class)** | 70.0% | **81.1%** | 63.3% |
-| **Precision (Bad Class)** | 42.0% | 36.9% | 39.6% |
-| **Recall (Good Class)** | 58.6% | 40.5% | 58.6% |
-
-### Key Takeaways & Strategic Decision:
-* **Model 2 (Random Forest)** serves as a **highly conservative "Risk-Averse Shield"**, capturing an elite **81.1% of high-risk defaults** (only 17 bad loans slipped through). However, it introduces a substantial opportunity cost by falsely rejecting 125 creditworthy customers.
-* **Model 1 (Logistic Regression)** offers a more **commercially balanced alternative**, securing the highest overall accuracy (62.0%) while still capturing 70.0% of default behaviors.
+* **Model 1: Logistic Regression (Balanced Champion - Accuracy: 62.0%)**
+    * Achieved a **70.0% Recall on the Bad class**, catching 63/90 high-risk defaults.
+    * Maintained a more commercially sustainable profile by minimizing false rejections of good clients.
+* **Model 2: Random Forest (Risk-Averse Shield - Accuracy: 52.7%)**
+    * Delivered an elite **81.1% Recall on the Bad class**, letting only 17 defaults slip through.
+    * Acts as the ultimate capital protection mechanism during economic downturns, despite higher opportunity costs.
+* **Model 3: Naive Bayes (Baseline - Accuracy: 60.0%)**
+    * Served as a probabilistic baseline to benchmark linear and non-linear interactions.
 
 ---
 
-## 5. Repository Structure
+## 4. Quick Start & Repository Structure
+### Repository Layout
 ```text
-├── data/
-│   ├── raw/               # Original encoded source file
-│   ├── processed/         # Cleaned, standardized, and scaled arrays
-│   └── README.md          # Comprehensive Data Dictionary
-├── notebooks/
-│   └── credit_risk_modeling_eda_and_training.ipynb  # End-to-end Jupyter Notebook
-├── src/                   # Python source utility scripts
-├── requirements.txt       # Project dependencies
-└── README.md              # Project executive summary (This file)
+├── data/              # Raw source and comprehensive Data Dictionary
+├── notebooks/         # Jupyter Notebook for EDA & Model Training pipelines
+├── reports/           
+│   └── project_report.pdf
